@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/run-tests.sh\"",
+            "timeout": 120,
+            "statusMessage": "Tests (npm test)…"
+          },
+          {
+            "type": "agent",
+            "prompt": "Tu es le vérificateur de cohérence documentaire du projet fragline (jeu CTF 2D, JavaScript vanilla). La doc vivante est l'écran d'accueil statique d'index.html (bloc #screen et .hint) : liste des touches et de leurs actions, tagline « 2D · CAPTURE THE FLAG · PREMIER À 3 », ligne des armes « RAIL · ASSAUT · POMPE · ROQUETTES », et la règle CTF du .hint (« ton drapeau doit être à la base pour marquer »). Sources de vérité côté code : js/input.js (touches et actions : WASD, souris, clic, Digit1-4, molette, KeyR, Space/Shift), js/config.js (CFG.WIN → « PREMIER À 3 »), js/weapons.js (noms et ordre des armes), js/ctf.js (règles de capture). À IGNORER : les textes réécrits dynamiquement par endGame dans js/main.js (h1 VICTOIRE/DÉFAITE, contenu de #tag avec le score, #cta REJOUER) — seul le HTML statique d'index.html compte ; ignorer aussi tout ce qui ne décrit pas une règle (styles, layout). Procédure : lance `git diff HEAD -- js/ index.html` ; si le diff est vide ou ne touche ni les touches, ni CFG.WIN, ni WEAPONS, ni les règles de capture, ni le bloc #screen/.hint, tout va bien. Sinon, compare chaque affirmation de l'écran d'accueil au code modifié. Règle de sortie stricte : réponds exactement `accept` si rien n'a changé ou si la doc reflète fidèlement les changements ; sinon réponds `block` en listant précisément les passages périmés d'index.html et la correction attendue pour chacun.",
+            "model": "claude-sonnet-4-6",
+            "timeout": 120,
+            "statusMessage": "Vérification synchro écran d'accueil…"
+          }
+        ]
+      }
+    ]
+  }
+}
